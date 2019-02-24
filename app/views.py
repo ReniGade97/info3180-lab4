@@ -15,11 +15,25 @@ from .forms import UploadForm
 # Routing for your application.
 ###
 
+def get_upload_images():
+    lst = []
+    rootdir = os.getcwd()
+    print rootdir
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            lst.append(file)
+        return lst
+
 @app.route('/')
 def home():
     """Render website's home page."""
     return render_template('home.html')
 
+@app.route('/files')
+def files():
+    lst = get_upload_images()
+    return render_template('files.html', lst = lst)
+    
 
 @app.route('/about/')
 def about():
